@@ -44,7 +44,7 @@
     <!-- Blueprint container support -->
     <dependency>
       <groupId>org.apache.camel</groupId>
-      <artifactId>camel-blueprint</artifactId>
+      <artifactId>camel-spring</artifactId>
     </dependency>  
 
     <!-- ActiveMQ connectivity for Camel -->            
@@ -65,14 +65,14 @@
       <artifactId>camel-bindy</artifactId>
     </dependency>    
     
-      <dependency>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-api</artifactId>
-      </dependency>
-      <dependency>
-          <groupId>org.slf4j</groupId>
-          <artifactId>slf4j-log4j12</artifactId>
-      </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-log4j12</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
