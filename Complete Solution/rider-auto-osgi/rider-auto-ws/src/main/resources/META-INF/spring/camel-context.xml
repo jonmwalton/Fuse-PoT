@@ -18,7 +18,6 @@
                    serviceClass="org.fusesource.camel.ws.OrderEndpoint"/>
   
   <camelContext id="rider-auto-ws" trace="true" xmlns="http://camel.apache.org/schema/spring">
-    <propertyPlaceholder id="properties" location="ref:osgi.properties"/>
     <route id="ws-to-jms">
       <from uri="cxf:bean:orderEndpoint" />  
       <setBody>

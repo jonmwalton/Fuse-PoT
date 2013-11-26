@@ -11,7 +11,7 @@
     <property name="password" value="admin"/>
   </bean>
 
-  <camelContext  id="rider-auto-normalizer" trace="false" xmlns="http://camel.apache.org/schema/spring">
+  <camelContext  id="rider-auto-normalizer" trace="true" xmlns="http://camel.apache.org/schema/spring">
     <route id="normalize-message-data">
       <from uri="activemq:incomingOrders" />
       <choice>

@@ -4,8 +4,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
                            http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
-
-  <camelContext  id="rider-auto-normalizer" trace="false" xmlns="http://camel.apache.org/schema/spring">
+  <camelContext  id="rider-auto-normalizer" trace="true" xmlns="http://camel.apache.org/schema/spring">
   </camelContext>
 
 </beans>

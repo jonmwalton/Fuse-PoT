@@ -1,22 +1,10 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:camel="http://camel.apache.org/schema/spring" 
-       xmlns:ctx="http://www.springframework.org/schema/context"
        xmlns:cxf="http://camel.apache.org/schema/cxf"
-       xmlns:osgi="http://www.springframework.org/schema/osgi"
-       xmlns:osgix="http://www.springframework.org/schema/osgi-compendium"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
                            http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd
-                           http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
-                           http://www.springframework.org/schema/osgi http://www.springframework.org/schema/osgi/spring-osgi.xsd
-                           http://www.springframework.org/schema/osgi-compendium http://www.springframework.org/schema/osgi-compendium/spring-osgi-compendium.xsd">
-
-  <osgix:cm-properties id="osgi.properties" persistent-id="org.fusesource.camel.ws">
-    <prop key="httpAddress">http://localhost:8182/cxf/order</prop>
-  </osgix:cm-properties>
-  
-  <ctx:property-placeholder properties-ref="osgi.properties"/>
+                           http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd">
 
   <!-- Set username and password to values you set in etc/user.properties -->
   <bean id="activemq" class="org.apache.activemq.camel.component.ActiveMQComponent" >
@@ -26,11 +14,10 @@
   </bean>
 
   <cxf:cxfEndpoint id="orderEndpoint"
-                   address="${httpAddress}"
+                   address="http://localhost:8182/cxf/order"
                    serviceClass="org.fusesource.camel.ws.OrderEndpoint"/>
   
-  <camelContext id="rider-auto-ws" trace="false" xmlns="http://camel.apache.org/schema/spring">
-    <propertyPlaceholder id="properties" location="ref:osgi.properties"/>
+  <camelContext id="rider-auto-ws" trace="true" xmlns="http://camel.apache.org/schema/spring">
     <route id="ws-to-jms">
       <from uri="cxf:bean:orderEndpoint" />  
       <setBody>
