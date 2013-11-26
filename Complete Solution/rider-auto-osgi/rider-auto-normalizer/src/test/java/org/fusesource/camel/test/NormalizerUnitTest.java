@@ -30,6 +30,9 @@ public class NormalizerUnitTest {
   @EndpointInject(uri = "mock:activemq:orders")
   private MockEndpoint mockAmqOrdersEP;
   
+  @EndpointInject(uri = "mock:activemq:invalidOrders")
+  private MockEndpoint mockAmqInvalidOrdersEP;
+  
   @Before
   public void adviceRoutes() throws Exception {
     ((ModelCamelContext) camelCtx).addRoutes(new RouteBuilder() {
@@ -38,6 +41,9 @@ public class NormalizerUnitTest {
       public void configure() throws Exception {
         from("activemq:orders")
           .to(mockAmqOrdersEP);
+        
+        from("activemq:invalidOrders")
+          .to(mockAmqInvalidOrdersEP);
       }
     });
   }
@@ -64,5 +70,18 @@ public class NormalizerUnitTest {
     mockAmqOrdersEP.expectedMessageCount(1);
     mockAmqOrdersEP.expectedHeaderReceived("JMSCorrelationID", id);
     MockEndpoint.assertIsSatisfied(mockAmqOrdersEP);
+  }
+  
+  @DirtiesContext
+  @Test
+  public void testRiderAutoNormalizerInvalidXmlRoute() throws Exception {
+    
+    String id = UUID.randomUUID().toString();
+    String body = "<foo></bar>";
+    amqIncomingOrdersPT.sendBodyAndHeader(body, "JMSCorrelationID", id);
+    mockAmqOrdersEP.expectedMessageCount(0);
+    mockAmqInvalidOrdersEP.expectedMessageCount(1);
+    mockAmqInvalidOrdersEP.expectedHeaderReceived("JMSCorrelationID", id);
+    MockEndpoint.assertIsSatisfied(mockAmqOrdersEP, mockAmqInvalidOrdersEP);
   }
 }
